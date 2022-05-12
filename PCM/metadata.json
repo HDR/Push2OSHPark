@@ -1,0 +1,27 @@
+{
+    "$schema": "https://go.kicad.org/pcm/schemas/v1",
+    "name": "Push2OSHPark",
+    "description": "Upload a board to OSHPark",
+    "description_full": "Single click uploader that generates gerbers and uploads them to OSHPark",
+    "identifier": "hdr.push2oshpark",
+    "type": "plugin",
+    "author": {
+        "name": "HDR",
+        "contact": {
+        }
+    },
+    "license": "MIT",
+    "resources": {
+        "Github": "https://github.com/HDR/Push2OSHPark"
+    },
+    "tags": [
+        "pcbnew"
+    ],
+    "versions": [{
+            "version": "1.0",
+            "status": "stable",
+            "kicad_version": "6.0",
+            "download_url": "https://github.com/HDR/Push2OSHPark"
+        }
+    ]
+}

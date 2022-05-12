@@ -56,8 +56,8 @@ class Push2OSHParkPlugin(pcbnew.ActionPlugin):
         
         #ZIP Gerbers
         getPath = kicad_file.replace(kicad_file.split("/")[-1], "")
-        shutil.make_archive(getPath + board_name, 'zip', getPath + 'Push2OSHPark/')
-        zipFile = getPath + board_name + '.zip'
+        shutil.make_archive(getPath + board_name + '_P2O', 'zip', getPath + 'Push2OSHPark/')
+        zipFile = getPath + board_name + '_P2O.zip'
         
         #Send HTTP Post
         files = [('file', (zipFile, open(zipFile, 'rb'), 'application/zip'))]

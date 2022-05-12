@@ -3,7 +3,7 @@
     "name": "Push2OSHPark",
     "description": "Upload a board to OSHPark",
     "description_full": "Single click uploader that generates gerbers and uploads them to OSHPark",
-    "identifier": "hdr.push2oshpark",
+    "identifier": "com.github.hdr.push2oshpark",
     "type": "plugin",
     "author": {
         "name": "HDR",

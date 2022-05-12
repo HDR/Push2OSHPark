@@ -21,7 +21,7 @@
             "version": "1.0",
             "status": "stable",
             "kicad_version": "6.0",
-            "download_sha256": "cbcc811d7d9f08855a30968bbf6d6c889b0d9c2437d527231cde209494142680"
+            "download_sha256": "cbcc811d7d9f08855a30968bbf6d6c889b0d9c2437d527231cde209494142680",
             "download_url": "https://github.com/HDR/Push2OSHPark"
         }
     ]

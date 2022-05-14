@@ -1,5 +1,8 @@
 ## Push2OSHPark
 
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/I3I713165)
+
+
 A plugin for KiCad 6.0 that allows uploading boards to OSHPark with the press of a button
 
 

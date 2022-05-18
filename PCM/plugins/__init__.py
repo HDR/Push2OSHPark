@@ -5,6 +5,7 @@ import time
 import requests
 import shutil
 import webbrowser
+import queue
 
 class Push2OSHParkPlugin(pcbnew.ActionPlugin):
 
@@ -18,13 +19,26 @@ class Push2OSHParkPlugin(pcbnew.ActionPlugin):
 
     def defaults(self):
         pass
-
-    def Run(self):
+        
+    def postZip(self, zfile):
+        #Send HTTP Post
+        files = [('file', (zfile, open(zfile, 'rb'), 'application/zip'))]
+        response = requests.request("POST", "https://oshpark.com/import", files=files)
+        webbrowser.get().open('https://oshpark.com/uploads/' + response.text)
+        response.close()
+        
+    def GenerateZip(self, kfile, bname):
+        #ZIP Gerbers
+        getPath = kfile.replace(kfile.split("/")[-1], "")
+        shutil.make_archive(getPath + bname + '_P2O', 'zip', getPath + 'Push2OSHPark/')
+        zipFile = getPath + bname + '_P2O.zip'
+        self.postZip(zipFile)
+        
+    def GenerateGerbers(self):
         #Generate Gerbers
         kicad_board = pcbnew.GetBoard()
         kicad_file = kicad_board.GetFileName()
         board_name = kicad_file.split("/")[-1].replace(".kicad_pcb", "")
-        
         
         plot = pcbnew.PLOT_CONTROLLER(kicad_board)
         plot_options = plot.GetPlotOptions()
@@ -36,7 +50,6 @@ class Push2OSHParkPlugin(pcbnew.ActionPlugin):
         for layer_id in layerid:
             layer_names.append(kicad_board.GetLayerName(layer_id))
         maxlen = max(layer_names, key=len)
-        
         
         #Plot Layers
         for i, layer_id in enumerate(layerid):
@@ -53,17 +66,10 @@ class Push2OSHParkPlugin(pcbnew.ActionPlugin):
         drill.SetFormat(True, pcbnew.EXCELLON_WRITER.DECIMAL_FORMAT, 3, 3)
         drill.CreateDrillandMapFilesSet(plot.GetPlotDirName(), True, False );
         
+        self.GenerateZip(kicad_file, board_name)
         
-        #ZIP Gerbers
-        getPath = kicad_file.replace(kicad_file.split("/")[-1], "")
-        shutil.make_archive(getPath + board_name + '_P2O', 'zip', getPath + 'Push2OSHPark/')
-        zipFile = getPath + board_name + '_P2O.zip'
-        
-        #Send HTTP Post
-        files = [('file', (zipFile, open(zipFile, 'rb'), 'application/zip'))]
-        response = requests.request("POST", "https://oshpark.com/import", files=files)
-        webbrowser.get().open('https://oshpark.com/uploads/' + response.text)
-        response.close()
+    def Run(self):
+        self.GenerateGerbers()
 
 
 
